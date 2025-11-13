@@ -1,0 +1,28 @@
+name: Backend .NET CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore ./backend/Agecanonix.Api.csproj
+    
+    - name: Build
+      run: dotnet build ./backend/Agecanonix.Api.csproj --no-restore --configuration Release
+    
+    - name: Test
+      run: dotnet test ./backend/Agecanonix.Api.csproj --no-build --verbosity normal --configuration Release
