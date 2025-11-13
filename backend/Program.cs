@@ -3,6 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -10,9 +12,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Désactiver la redirection HTTPS en développement pour éviter l'erreur
+// app.UseHttpsRedirection();
+
+// Route racine pour éviter l'erreur 404
+app.MapGet("/", () => Results.Redirect("/swagger"))
+    .WithName("Root")
+    .ExcludeFromDescription();
 
 var summaries = new[]
 {
