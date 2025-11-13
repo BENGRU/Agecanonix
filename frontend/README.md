@@ -1,24 +1,24 @@
 # Frontend Flutter - Agecanonix
 
-## Installation de Flutter
+## Lancer l'application (Web)
 
-Flutter n'est pas encore installé sur votre système. Pour l'installer :
+Flutter est installé. L'application minimale a été créée dans `frontend/agecanonix_app` avec la plateforme `web`.
 
-1. Téléchargez Flutter depuis : https://docs.flutter.dev/get-started/install/windows
-2. Extrayez l'archive dans un dossier (ex: `C:\src\flutter`)
-3. Ajoutez `C:\src\flutter\bin` à votre PATH
-4. Redémarrez VS Code
-
-## Création du projet Flutter
-
-Une fois Flutter installé, exécutez dans ce dossier :
+Exécutez en mode web (Chrome) :
 
 ```powershell
-flutter create agecanonix_app
-cd agecanonix_app
-flutter run
+cd "c:\Users\benja\Documents\My Project\Agecanonix\frontend\agecanonix_app"
+flutter run -d chrome
 ```
+
+Ou via VS Code : `Tasks: Run Task` → `Frontend: Run Web (Chrome)`.
 
 ## Structure prévue
 
 Le frontend Flutter communiquera avec le backend .NET via API REST.
+
+## Dépendances utiles (à venir)
+
+- http (requêtes API)
+- flutter_riverpod ou provider (état)
+- go_router (navigation)
