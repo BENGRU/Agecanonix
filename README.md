@@ -14,15 +14,18 @@ Agecanonix/
 
 ## Prérequis
 
-- **.NET SDK 9.0** ✅ (installé)
-- **Flutter SDK** ⚠️ (à installer - voir frontend/README.md)
+- **.NET SDK 10.0** ✅ (installé)
+- **Flutter SDK** ✅ (installé dans /opt/flutter)
 - **Git** (pour GitHub)
 
 ## Backend (.NET Web API)
 
+**Note** : Pour utiliser `dotnet` dans les terminaux, ajoutez `export PATH="$HOME/.dotnet:$PATH"` à votre `~/.bashrc` ou exécutez cette commande avant d'utiliser dotnet.
+
 ### Lancer le backend
 
-```powershell
+```bash
+export PATH="$HOME/.dotnet:$PATH"
 cd backend
 dotnet run
 ```
@@ -35,7 +38,17 @@ Ouvrez dans le navigateur : `https://localhost:7xxx/swagger`
 
 ## Frontend (Flutter)
 
-Voir les instructions dans `frontend/README.md` pour installer Flutter et créer l'application.
+**Note** : Pour utiliser `flutter`, ajoutez `export PATH="/opt/flutter/bin:$PATH"` à votre `~/.bashrc` ou exécutez cette commande avant d'utiliser flutter.
+
+### Lancer le frontend
+
+```bash
+export PATH="/opt/flutter/bin:$PATH"
+cd frontend/agecanonix_app
+flutter run -d web-server --web-port=8080
+```
+
+Voir les instructions complètes dans `frontend/README.md`.
 
 ## CI/CD avec GitHub Actions
 
@@ -45,11 +58,10 @@ Des workflows CI sont configurés dans `.github/workflows/` pour :
 
 ## Prochaines étapes
 
-1. ✅ Backend .NET créé et fonctionnel
-2. ⏳ Installer Flutter SDK (voir frontend/README.md)
-3. ⏳ Créer le projet Flutter dans `frontend/`
-4. ⏳ Initialiser Git et créer le dépôt GitHub
-5. ⏳ Configurer GitHub Actions
+1. ✅ Backend .NET créé et fonctionnel avec .NET 10
+2. ✅ Flutter SDK installé et projet compilé
+3. ⏳ Connecter le frontend au backend via API REST
+4. ⏳ Ajouter des fonctionnalités métier
 
 ## License
 

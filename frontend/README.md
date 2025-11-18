@@ -1,17 +1,36 @@
 # Frontend Flutter - Agecanonix
 
-## Lancer l'application (Web)
+## Installation de Flutter
 
-Flutter est installé. L'application minimale a été créée dans `frontend/agecanonix_app` avec la plateforme `web`.
+Flutter SDK est installé dans `/opt/flutter`.
 
-Exécutez en mode web (Chrome) :
-
-```powershell
-cd "c:\Users\benja\Documents\My Project\Agecanonix\frontend\agecanonix_app"
-flutter run -d chrome
+Pour utiliser Flutter, ajoutez-le au PATH :
+```bash
+export PATH="/opt/flutter/bin:$PATH"
 ```
 
-Ou via VS Code : `Tasks: Run Task` → `Frontend: Run Web (Chrome)`.
+## Lancer l'application (Web)
+
+L'application Flutter est prête dans `frontend/agecanonix_app`.
+
+### Installer les dépendances
+```bash
+export PATH="/opt/flutter/bin:$PATH"
+cd /workspaces/Agecanonix/frontend/agecanonix_app
+flutter pub get
+```
+
+### Exécuter en mode développement
+```bash
+flutter run -d web-server --web-port=8080
+```
+
+### Compiler pour la production
+```bash
+flutter build web --release
+```
+
+L'application compilée sera dans `build/web/`.
 
 ## Structure prévue
 

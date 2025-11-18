@@ -4,25 +4,46 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Configure CORS pour permettre les requêtes depuis le frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
+
+// Activer CORS
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
 // Désactiver la redirection HTTPS en développement pour éviter l'erreur
 // app.UseHttpsRedirection();
 
-// Route racine pour éviter l'erreur 404
-app.MapGet("/", () => Results.Redirect("/swagger"))
-    .WithName("Root")
-    .ExcludeFromDescription();
+// Route racine - Afficher les informations de l'API
+app.MapGet("/", () => new
+{
+    name = "Agecanonix API",
+    version = "1.0.0",
+    endpoints = new
+    {
+        weatherForecast = "/weatherforecast",
+        openApiSpec = "/openapi/v1.json"
+    },
+    message = "API fonctionnelle avec .NET 10 🚀"
+})
+.WithName("Root")
+.ExcludeFromDescription();
 
 var summaries = new[]
 {
