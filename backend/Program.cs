@@ -1,9 +1,14 @@
 using Agecanonix.Infrastructure.Data;
+using Agecanonix.Application.Interfaces;
+using Agecanonix.Infrastructure.Repositories;
+using Agecanonix.Api.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Serilog;
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +25,31 @@ builder.Host.UseSerilog();
 // Add services to the container
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Agecanonix API",
+        Version = "v2.0",
+        Description = "API de gestion administrative pour EHPAD - Clean Architecture avec .NET 10",
+        Contact = new OpenApiContact
+        {
+            Name = "Agecanonix Support",
+            Email = "support@agecanonix.fr"
+        }
+    });
+});
+
+// Add MediatR
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(Assembly.Load("Agecanonix.Application"));
+});
+
+// Add AutoMapper
+builder.Services.AddAutoMapper(Assembly.Load("Agecanonix.Application"));
+
+// Add Repositories
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 // Configure PostgreSQL database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
@@ -77,6 +107,13 @@ app.UseAuthorization();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Agecanonix API v2.0");
+        options.RoutePrefix = "swagger"; // URL : /swagger
+        options.DocumentTitle = "Agecanonix API Documentation";
+    });
 }
 
 // Root endpoint - API information
@@ -88,11 +125,12 @@ app.MapGet("/", () => new
     architecture = "Clean Architecture with .NET 10",
     endpoints = new
     {
+        swagger = "/swagger",
         openApiSpec = "/openapi/v1.json",
         facilities = "/api/facilities",
         residents = "/api/residents",
-        invoices = "/api/invoices",
-        staff = "/api/staff"
+        contacts = "/api/contacts",
+        stays = "/api/stays"
     },
     technologies = new[] 
     { 
@@ -113,6 +151,12 @@ app.MapGet("/health", () => new
     timestamp = DateTime.UtcNow
 })
 .WithName("HealthCheck");
+
+// Map API endpoints
+app.MapFacilityEndpoints();
+app.MapResidentEndpoints();
+app.MapContactEndpoints();
+app.MapStayEndpoints();
 
 Log.Information("Agecanonix API started");
 app.Run();
