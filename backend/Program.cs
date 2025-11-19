@@ -1,11 +1,34 @@
+using Agecanonix.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/agecanonix-.log", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Add services to the container
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configure CORS pour permettre les requêtes depuis le frontend
+// Configure PostgreSQL database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? "Host=localhost;Database=agecanonix;Username=postgres;Password=postgres";
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+// Configure CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -16,57 +39,80 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Configure JWT Authentication
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"] ?? "YourSuperSecretKeyThatMustBeLong2024!";
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["Issuer"] ?? "AgecanonixAPI",
+        ValidAudience = jwtSettings["Audience"] ?? "AgecanonixClient",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+    };
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Activer CORS
+// Enable CORS
 app.UseCors("AllowAll");
 
-// Configure the HTTP request pipeline.
+// Enable authentication and authorization
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-// Désactiver la redirection HTTPS en développement pour éviter l'erreur
-// app.UseHttpsRedirection();
-
-// Route racine - Afficher les informations de l'API
+// Root endpoint - API information
 app.MapGet("/", () => new
 {
     name = "Agecanonix API",
-    version = "1.0.0",
+    version = "2.0.0",
+    description = "Administrative and billing management API for nursing homes (EHPAD)",
+    architecture = "Clean Architecture with .NET 10",
     endpoints = new
     {
-        weatherForecast = "/weatherforecast",
-        openApiSpec = "/openapi/v1.json"
+        openApiSpec = "/openapi/v1.json",
+        facilities = "/api/facilities",
+        residents = "/api/residents",
+        invoices = "/api/invoices",
+        staff = "/api/staff"
     },
-    message = "API fonctionnelle avec .NET 10 🚀"
+    technologies = new[] 
+    { 
+        ".NET 10", 
+        "Entity Framework Core 10", 
+        "PostgreSQL", 
+        "JWT Authentication",
+        "Serilog"
+    }
 })
 .WithName("Root")
 .ExcludeFromDescription();
 
-var summaries = new[]
+// Health check endpoint
+app.MapGet("/health", () => new
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    status = "healthy",
+    timestamp = DateTime.UtcNow
 })
-.WithName("GetWeatherForecast");
+.WithName("HealthCheck");
 
+Log.Information("Agecanonix API started");
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
