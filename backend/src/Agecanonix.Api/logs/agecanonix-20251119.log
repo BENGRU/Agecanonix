@@ -1,0 +1,89 @@
+2025-11-19 13:59:50.308 +00:00 [INF] Agecanonix API started
+2025-11-19 13:59:50.485 +00:00 [WRN] Storing keys in a direc2025-11-19 13:59:50.485 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more in2025-11-19 13:59:50.564 +00:00 [WRN] No XML encryptor config2025-11-19 13:59:50.564 +00:00 [WRN] No XML encryptor configured. Key {c5f5e711-801d-433b-aff1-2f0b29ce380b} may be persisted to storage in unencrypted form.
+2025-11-19 14:00:35.173 +00:00 [INF] Agecanonix API started
+2025-11-19 14:00:35.275 +00:00 [WRN] Storing keys in a direc2025-11-19 14:00:35.275 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 14:05:07.374 +00:00 [INF] Agecanonix API started
+2025-11-19 14:05:07.550 +00:00 [WRN] Storing keys in a direc2025-11-19 14:05:07.550 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 14:15:21.478 +00:00 [INF] Agecanonix API started
+2025-11-19 14:15:21.687 +00:00 [WRN] Storing keys in a direc2025-11-19 14:15:21.687 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 14:17:31.977 +00:00 [INF] Agecanonix API started
+2025-11-19 14:17:32.145 +00:00 [WRN] Storing keys in a direc2025-11-19 14:17:32.145 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 14:22:53.348 +00:00 [INF] Agecanonix API started
+2025-11-19 14:22:53.536 +00:00 [WRN] Storing keys in a direc2025-11-19 14:22:53.536 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more in2025-11-19 14:24:15.326 +00:00 [WRN] You do not have a valid2025-11-19 14:24:15.326 +00:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2025-11-19 15:37:19.367 +00:00 [INF] Agecanonix API started
+2025-11-19 15:37:19.463 +00:00 [WRN] Storing keys in a direc2025-11-19 15:37:19.463 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 15:41:49.004 +00:00 [INF] Agecanonix API started
+2025-11-19 15:41:49.173 +00:00 [WRN] Storing keys in a direc2025-11-19 15:41:49.173 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more in2025-11-19 15:42:28.392 +00:00 [ERR] An unhandled exception 2025-11-19 15:42:28.392 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically. The unsupported member type is located on type 'System.Object'. Path: $.AdditionalItems.
+ ---> System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically.
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException_NoMetadataForType(Type type, IJsonTypeInfoResolver resolver)
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type type, Boolean ensureConfigured, Nullable`1 ensureNotNull, Boolean resolveIfMutable, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.WriteStackFrame.InitializePolymorphicReEntry(Type runtimeType, JsonSerializerOptions options)
+   at System.Text.Json.Serialization.JsonConverter.ResolvePolymorphicConverter(Object value, JsonTypeInfo jsonTypeInfo, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.DictionaryOfTKeyTValueConverter`3.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWriteDataExtensionProperty(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJsonExtensionData(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(WriteStack& state, Exception innerException)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)
+   at System.Text.Json.JsonSerializer.WriteString[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Serialize[TValue](TValue value, JsonTypeInfo`1 jsonTypeInfo)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.GetIndexArguments()
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.RespondWithFile(HttpResponse response, String fileName, CancellationToken cancellationToken)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.Devel2025-11-19 15:42:45.078 +00:00 [ERR] An unhandled exception 2025-11-19 15:42:45.078 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically. The unsupported member type is located on type 'System.Object'. Path: $.AdditionalItems.
+ ---> System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically.
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException_NoMetadataForType(Type type, IJsonTypeInfoResolver resolver)
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type type, Boolean ensureConfigured, Nullable`1 ensureNotNull, Boolean resolveIfMutable, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.WriteStackFrame.InitializePolymorphicReEntry(Type runtimeType, JsonSerializerOptions options)
+   at System.Text.Json.Serialization.JsonConverter.ResolvePolymorphicConverter(Object value, JsonTypeInfo jsonTypeInfo, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.DictionaryOfTKeyTValueConverter`3.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWriteDataExtensionProperty(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJsonExtensionData(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(WriteStack& state, Exception innerException)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)
+   at System.Text.Json.JsonSerializer.WriteString[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Serialize[TValue](TValue value, JsonTypeInfo`1 jsonTypeInfo)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.GetIndexArguments()
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.RespondWithFile(HttpResponse response, String fileName, CancellationToken cancellationToken)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.Devel2025-11-19 15:42:56.254 +00:00 [ERR] An unhandled exception 2025-11-19 15:42:56.254 +00:00 [ERR] An unhandled exception has occurred while executing the request.
+System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically. The unsupported member type is located on type 'System.Object'. Path: $.AdditionalItems.
+ ---> System.NotSupportedException: JsonTypeInfo metadata for type '<>f__AnonymousType0`2[System.String,System.String][]' was not provided by TypeInfoResolver of type 'Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIOptionsJsonContext'. If using source generation, ensure that all root types passed to the serializer have been annotated with 'JsonSerializableAttribute', along with any types that might be serialized polymorphically.
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException_NoMetadataForType(Type type, IJsonTypeInfoResolver resolver)
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type type, Boolean ensureConfigured, Nullable`1 ensureNotNull, Boolean resolveIfMutable, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.WriteStackFrame.InitializePolymorphicReEntry(Type runtimeType, JsonSerializerOptions options)
+   at System.Text.Json.Serialization.JsonConverter.ResolvePolymorphicConverter(Object value, JsonTypeInfo jsonTypeInfo, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.DictionaryOfTKeyTValueConverter`3.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWriteDataExtensionProperty(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJsonExtensionData(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(WriteStack& state, Exception innerException)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)
+   at System.Text.Json.JsonSerializer.WriteString[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)
+   at System.Text.Json.JsonSerializer.Serialize[TValue](TValue value, JsonTypeInfo`1 jsonTypeInfo)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.GetIndexArguments()
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.RespondWithFile(HttpResponse response, String fileName, CancellationToken cancellationToken)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-11-19 15:45:16.402 +00:00 [INF] Agecanonix API started
+2025-11-19 15:45:16.645 +00:00 [WRN] Storing keys in a direc2025-11-19 15:45:16.645 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2025-11-19 15:50:33.924 +00:00 [INF] Agecanonix API started
+2025-11-19 15:50:34.100 +00:00 [WRN] Storing keys in a direc2025-11-19 15:50:34.100 +00:00 [WRN] Storing keys in a directory '/home/codespace/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more in2025-11-19 15:50:48.864 +00:00 [WRN] You do not have a valid2025-11-19 15:50:48.864 +00:00 [WRN] You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
