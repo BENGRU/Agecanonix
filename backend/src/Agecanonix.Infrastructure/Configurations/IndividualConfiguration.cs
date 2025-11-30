@@ -4,9 +4,9 @@ using Agecanonix.Domain.Entities;
 
 namespace Agecanonix.Infrastructure.Configurations;
 
-public class ResidentConfiguration : IEntityTypeConfiguration<Resident>
+public class IndividualConfiguration : IEntityTypeConfiguration<Individual>
 {
-    public void Configure(EntityTypeBuilder<Resident> builder)
+    public void Configure(EntityTypeBuilder<Individual> builder)
     {
         builder.HasKey(e => e.Id);
         

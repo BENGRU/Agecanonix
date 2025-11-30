@@ -11,9 +11,8 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Facility> Facilities { get; set; }
-    public DbSet<Resident> Residents { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-    public DbSet<Stay> Stays { get; set; }
+    public DbSet<Individual> Individuals { get; set; }
+    public DbSet<IndividualRelationship> IndividualRelationships { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

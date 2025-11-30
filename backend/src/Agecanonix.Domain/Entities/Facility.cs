@@ -15,7 +15,4 @@ public class Facility : BaseEntity
     public string Phone { get; set; } = string.Empty;
     public string? Email { get; set; }
     public int Capacity { get; set; }
-    
-    // Relations
-    public ICollection<Stay> Stays { get; set; } = new List<Stay>();
 }
