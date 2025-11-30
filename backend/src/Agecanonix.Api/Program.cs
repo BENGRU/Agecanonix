@@ -138,7 +138,7 @@ app.MapGet("/", () => new
         swagger = "/swagger",
         openApiSpec = "/openapi/v1.json",
         facilities = "/api/facilities",
-        residents = "/api/residents",
+        individuals = "/api/individuals",
         contacts = "/api/contacts",
         stays = "/api/stays"
     },
@@ -164,9 +164,8 @@ app.MapGet("/health", () => new
 
 // Map API endpoints
 app.MapFacilityEndpoints();
-app.MapResidentEndpoints();
-app.MapContactEndpoints();
-app.MapStayEndpoints();
+app.MapIndividualEndpoints();
+app.MapIndividualRelationshipEndpoints();
 
 Log.Information("Agecanonix API started");
 app.Run();

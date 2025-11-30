@@ -1,7 +1,8 @@
-namespace Agecanonix.Application.DTOs.Contact;
+namespace Agecanonix.Application.DTOs.IndividualRelationship;
 
-public class CreateContactDto
+public class IndividualRelationshipDto
 {
+    public Guid Id { get; set; }
     public string LastName { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
@@ -13,4 +14,6 @@ public class CreateContactDto
     public bool CanPickUp { get; set; }
     public string? Notes { get; set; }
     public Guid ResidentId { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }

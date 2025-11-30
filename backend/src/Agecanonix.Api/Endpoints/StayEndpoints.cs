@@ -30,12 +30,12 @@ public static class StayEndpoints
         .Produces<StayDto>(200)
         .Produces(404);
 
-        group.MapGet("/resident/{residentId}", async (Guid residentId, IMediator mediator) =>
+        group.MapGet("/individual/{individualId}", async (Guid individualId, IMediator mediator) =>
         {
-            var stays = await mediator.Send(new GetStaysByResidentIdQuery(residentId));
+            var stays = await mediator.Send(new GetStaysByIndividualIdQuery(individualId));
             return Results.Ok(stays);
         })
-        .WithName("GetStaysByResidentId")
+        .WithName("GetStaysByIndividualId")
         .Produces<IEnumerable<StayDto>>(200);
 
         group.MapGet("/facility/{facilityId}", async (Guid facilityId, IMediator mediator) =>

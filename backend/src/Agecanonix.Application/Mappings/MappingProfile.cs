@@ -1,7 +1,6 @@
 using Agecanonix.Application.DTOs.Facility;
-using Agecanonix.Application.DTOs.Resident;
-using Agecanonix.Application.DTOs.Contact;
-using Agecanonix.Application.DTOs.Stay;
+using Agecanonix.Application.DTOs.Individual;
+using Agecanonix.Application.DTOs.IndividualRelationship;
 using Agecanonix.Domain.Entities;
 using Mapster;
 

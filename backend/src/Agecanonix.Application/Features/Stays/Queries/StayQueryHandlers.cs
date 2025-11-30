@@ -38,18 +38,18 @@ public class GetStayByIdQueryHandler : IRequestHandler<GetStayByIdQuery, StayDto
     }
 }
 
-public class GetStaysByResidentIdQueryHandler : IRequestHandler<GetStaysByResidentIdQuery, IEnumerable<StayDto>>
+public class GetStaysByIndividualIdQueryHandler : IRequestHandler<GetStaysByIndividualIdQuery, IEnumerable<StayDto>>
 {
     private readonly IRepository<Stay> _repository;
 
-    public GetStaysByResidentIdQueryHandler(IRepository<Stay> repository)
+    public GetStaysByIndividualIdQueryHandler(IRepository<Stay> repository)
     {
         _repository = repository;
     }
 
-    public async Task<IEnumerable<StayDto>> Handle(GetStaysByResidentIdQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<StayDto>> Handle(GetStaysByIndividualIdQuery request, CancellationToken cancellationToken)
     {
-        var stays = await _repository.FindAsync(s => s.ResidentId == request.ResidentId);
+        var stays = await _repository.FindAsync(s => s.IndividualId == request.IndividualId);
         return stays.OrderByDescending(s => s.StartDate).Adapt<IEnumerable<StayDto>>();
     }
 }

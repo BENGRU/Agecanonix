@@ -1,6 +1,6 @@
-namespace Agecanonix.Application.DTOs.Resident;
+namespace Agecanonix.Application.DTOs.Individual;
 
-public class CreateResidentDto
+public class UpdateIndividualDto
 {
     public string LastName { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;

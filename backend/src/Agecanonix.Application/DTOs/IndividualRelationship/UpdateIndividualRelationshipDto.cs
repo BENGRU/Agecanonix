@@ -1,6 +1,6 @@
-namespace Agecanonix.Application.DTOs.Contact;
+namespace Agecanonix.Application.DTOs.IndividualRelationship;
 
-public class UpdateContactDto
+public class UpdateIndividualRelationshipDto
 {
     public string LastName { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;

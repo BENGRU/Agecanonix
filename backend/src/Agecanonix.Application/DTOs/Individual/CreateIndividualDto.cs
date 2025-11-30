@@ -1,8 +1,7 @@
-namespace Agecanonix.Application.DTOs.Resident;
+namespace Agecanonix.Application.DTOs.Individual;
 
-public class ResidentDto
+public class CreateIndividualDto
 {
-    public Guid Id { get; set; }
     public string LastName { get; set; } = string.Empty;
     public string FirstName { get; set; } = string.Empty;
     public DateTime BirthDate { get; set; }
@@ -10,6 +9,4 @@ public class ResidentDto
     public string? Address { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? UpdatedAt { get; set; }
 }
