@@ -26,18 +26,18 @@ public class ApplicationDbContext : DbContext
     {
         // Automatic timestamp updates
         var entries = ChangeTracker.Entries()
-            .Where(e => e.Entity is Domain.Common.BaseEntity && 
+            .Where(e => e.Entity is Domain.Common.BaseEntity &&
                        (e.State == EntityState.Added || e.State == EntityState.Modified));
 
         foreach (var entityEntry in entries)
         {
             var entity = (Domain.Common.BaseEntity)entityEntry.Entity;
-            
+
             if (entityEntry.State == EntityState.Added)
             {
                 entity.CreatedAt = DateTime.UtcNow;
             }
-            
+
             if (entityEntry.State == EntityState.Modified)
             {
                 entity.UpdatedAt = DateTime.UtcNow;

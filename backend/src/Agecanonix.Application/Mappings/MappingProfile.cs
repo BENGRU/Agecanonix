@@ -12,7 +12,7 @@ public static class MappingConfig
     {
         // Mapster utilise des conventions par défaut et ne nécessite généralement pas de configuration explicite
         // Les mappings simples sont automatiques
-        
+
         // Configuration personnalisée si nécessaire
         TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
     }

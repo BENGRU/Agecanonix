@@ -14,10 +14,10 @@ public class Individual : BaseEntity
     public string? Address { get; set; }
     public string? Phone { get; set; }
     public string? Email { get; set; }
-    
+
     // Relations - relationships where this individual is the source
     public ICollection<IndividualRelationship> RelatedIndividuals { get; set; } = new List<IndividualRelationship>();
-    
+
     // Relations - relationships where this individual is the related person
     public ICollection<IndividualRelationship> RelatedBy { get; set; } = new List<IndividualRelationship>();
 }

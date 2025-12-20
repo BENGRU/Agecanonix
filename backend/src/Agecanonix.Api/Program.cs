@@ -28,7 +28,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 // Detect Codespaces URL
 var codespaceUrl = Environment.GetEnvironmentVariable("CODESPACE_NAME");
-var serverUrl = !string.IsNullOrEmpty(codespaceUrl) 
+var serverUrl = !string.IsNullOrEmpty(codespaceUrl)
     ? $"https://{codespaceUrl}-5175.app.github.dev"
     : "http://localhost:5175";
 
@@ -43,7 +43,7 @@ builder.Services.AddOpenApi(options =>
             dynamic server = Activator.CreateInstance(serverType)!;
             server.Url = serverUrl;
             server.Description = "API Server";
-            
+
             var listType = typeof(List<>).MakeGenericType(serverType);
             dynamic serversList = Activator.CreateInstance(listType)!;
             serversList.Add(server);
@@ -54,7 +54,8 @@ builder.Services.AddOpenApi(options =>
 });
 
 // Add MediatR
-builder.Services.AddMediatR(cfg => {
+builder.Services.AddMediatR(cfg =>
+{
     cfg.RegisterServicesFromAssembly(Assembly.Load("Agecanonix.Application"));
 });
 
@@ -142,11 +143,11 @@ app.MapGet("/", () => new
         contacts = "/api/contacts",
         stays = "/api/stays"
     },
-    technologies = new[] 
-    { 
-        ".NET 10", 
-        "Entity Framework Core 10", 
-        "InMemory Database", 
+    technologies = new[]
+    {
+        ".NET 10",
+        "Entity Framework Core 10",
+        "InMemory Database",
         "JWT Authentication",
         "Serilog"
     }
