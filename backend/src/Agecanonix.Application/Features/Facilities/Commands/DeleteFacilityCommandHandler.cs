@@ -15,11 +15,11 @@ public class DeleteFacilityCommandHandler : IRequestHandler<DeleteFacilityComman
 
     public async Task<bool> Handle(DeleteFacilityCommand request, CancellationToken cancellationToken)
     {
-        var facility = await _repository.GetByIdAsync(request.Id);
+        var facility = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (facility == null)
             return false;
 
-        await _repository.DeleteAsync(facility);
+        await _repository.DeleteAsync(facility, cancellationToken);
         return true;
     }
 }

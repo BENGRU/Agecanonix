@@ -22,7 +22,7 @@ public class CreateFacilityCommandHandler : IRequestHandler<CreateFacilityComman
         facility.CreatedAt = DateTime.UtcNow;
         facility.CreatedBy = "system"; // TODO: Get from authenticated user
 
-        var created = await _repository.AddAsync(facility);
+        var created = await _repository.AddAsync(facility, cancellationToken);
         return created.Adapt<FacilityDto>();
     }
 }

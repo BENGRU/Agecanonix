@@ -17,7 +17,7 @@ public class GetAllIndividualsQueryHandler : IRequestHandler<GetAllIndividualsQu
 
     public async Task<IEnumerable<IndividualDto>> Handle(GetAllIndividualsQuery request, CancellationToken cancellationToken)
     {
-        var individuals = await _repository.GetAllAsync();
+        var individuals = await _repository.GetAllAsync(cancellationToken);
         return individuals.Adapt<IEnumerable<IndividualDto>>();
     }
 }
@@ -33,7 +33,7 @@ public class GetIndividualByIdQueryHandler : IRequestHandler<GetIndividualByIdQu
 
     public async Task<IndividualDto?> Handle(GetIndividualByIdQuery request, CancellationToken cancellationToken)
     {
-        var resident = await _repository.GetByIdAsync(request.Id);
+        var resident = await _repository.GetByIdAsync(request.Id, cancellationToken);
         return resident?.Adapt<IndividualDto>();
     }
 }

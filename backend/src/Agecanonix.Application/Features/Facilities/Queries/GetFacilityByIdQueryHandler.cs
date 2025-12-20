@@ -17,7 +17,7 @@ public class GetFacilityByIdQueryHandler : IRequestHandler<GetFacilityByIdQuery,
 
     public async Task<FacilityDto?> Handle(GetFacilityByIdQuery request, CancellationToken cancellationToken)
     {
-        var facility = await _repository.GetByIdAsync(request.Id);
+        var facility = await _repository.GetByIdAsync(request.Id, cancellationToken);
         return facility?.Adapt<FacilityDto>();
     }
 }

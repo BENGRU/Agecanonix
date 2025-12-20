@@ -17,7 +17,7 @@ public class UpdateFacilityCommandHandler : IRequestHandler<UpdateFacilityComman
 
     public async Task<FacilityDto> Handle(UpdateFacilityCommand request, CancellationToken cancellationToken)
     {
-        var facility = await _repository.GetByIdAsync(request.Id);
+        var facility = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (facility == null)
             throw new KeyNotFoundException($"Facility with ID {request.Id} not found");
 
@@ -25,7 +25,7 @@ public class UpdateFacilityCommandHandler : IRequestHandler<UpdateFacilityComman
         facility.UpdatedAt = DateTime.UtcNow;
         facility.UpdatedBy = "system"; // TODO: Get from authenticated user
 
-        await _repository.UpdateAsync(facility);
+        await _repository.UpdateAsync(facility, cancellationToken);
         return facility.Adapt<FacilityDto>();
     }
 }

@@ -17,7 +17,7 @@ public class GetAllIndividualRelationshipsQueryHandler : IRequestHandler<GetAllI
 
     public async Task<IEnumerable<IndividualRelationshipDto>> Handle(GetAllIndividualRelationshipsQuery request, CancellationToken cancellationToken)
     {
-        var relationships = await _repository.GetAllAsync();
+        var relationships = await _repository.GetAllAsync(cancellationToken);
         return relationships.Adapt<IEnumerable<IndividualRelationshipDto>>();
     }
 }
@@ -33,7 +33,7 @@ public class GetIndividualRelationshipByIdQueryHandler : IRequestHandler<GetIndi
 
     public async Task<IndividualRelationshipDto?> Handle(GetIndividualRelationshipByIdQuery request, CancellationToken cancellationToken)
     {
-        var relationship = await _repository.GetByIdAsync(request.Id);
+        var relationship = await _repository.GetByIdAsync(request.Id, cancellationToken);
         return relationship?.Adapt<IndividualRelationshipDto>();
     }
 }
@@ -49,7 +49,7 @@ public class GetIndividualRelationshipsByIndividualIdQueryHandler : IRequestHand
 
     public async Task<IEnumerable<IndividualRelationshipDto>> Handle(GetIndividualRelationshipsByIndividualIdQuery request, CancellationToken cancellationToken)
     {
-        var relationships = await _repository.FindAsync(r => r.SourceIndividualId == request.IndividualId);
+        var relationships = await _repository.FindAsync(r => r.SourceIndividualId == request.IndividualId, cancellationToken);
         return relationships.OrderBy(r => r.Priority).Adapt<IEnumerable<IndividualRelationshipDto>>();
     }
 }

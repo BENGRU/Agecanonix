@@ -22,7 +22,7 @@ public class CreateIndividualRelationshipCommandHandler : IRequestHandler<Create
         relationship.CreatedAt = DateTime.UtcNow;
         relationship.CreatedBy = "system";
 
-        var created = await _repository.AddAsync(relationship);
+        var created = await _repository.AddAsync(relationship, cancellationToken);
         return created.Adapt<IndividualRelationshipDto>();
     }
 }
@@ -38,7 +38,7 @@ public class UpdateIndividualRelationshipCommandHandler : IRequestHandler<Update
 
     public async Task<IndividualRelationshipDto> Handle(UpdateIndividualRelationshipCommand request, CancellationToken cancellationToken)
     {
-        var relationship = await _repository.GetByIdAsync(request.Id);
+        var relationship = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (relationship == null)
             throw new KeyNotFoundException($"IndividualRelationship with ID {request.Id} not found");
 
@@ -46,7 +46,7 @@ public class UpdateIndividualRelationshipCommandHandler : IRequestHandler<Update
         relationship.UpdatedAt = DateTime.UtcNow;
         relationship.UpdatedBy = "system";
 
-        await _repository.UpdateAsync(relationship);
+        await _repository.UpdateAsync(relationship, cancellationToken);
         return relationship.Adapt<IndividualRelationshipDto>();
     }
 }
@@ -62,11 +62,11 @@ public class DeleteIndividualRelationshipCommandHandler : IRequestHandler<Delete
 
     public async Task<bool> Handle(DeleteIndividualRelationshipCommand request, CancellationToken cancellationToken)
     {
-        var relationship = await _repository.GetByIdAsync(request.Id);
+        var relationship = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (relationship == null)
             return false;
 
-        await _repository.DeleteAsync(relationship);
+        await _repository.DeleteAsync(relationship, cancellationToken);
         return true;
     }
 }

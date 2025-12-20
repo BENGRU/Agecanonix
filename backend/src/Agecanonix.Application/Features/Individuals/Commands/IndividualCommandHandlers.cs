@@ -22,7 +22,7 @@ public class CreateIndividualCommandHandler : IRequestHandler<CreateIndividualCo
         resident.CreatedAt = DateTime.UtcNow;
         resident.CreatedBy = "system";
 
-        var created = await _repository.AddAsync(resident);
+        var created = await _repository.AddAsync(resident, cancellationToken);
         return created.Adapt<IndividualDto>();
     }
 }
@@ -38,7 +38,7 @@ public class UpdateIndividualCommandHandler : IRequestHandler<UpdateIndividualCo
 
     public async Task<IndividualDto> Handle(UpdateIndividualCommand request, CancellationToken cancellationToken)
     {
-        var resident = await _repository.GetByIdAsync(request.Id);
+        var resident = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (resident == null)
             throw new KeyNotFoundException($"Individual with ID {request.Id} not found");
 
@@ -46,7 +46,7 @@ public class UpdateIndividualCommandHandler : IRequestHandler<UpdateIndividualCo
         resident.UpdatedAt = DateTime.UtcNow;
         resident.UpdatedBy = "system";
 
-        await _repository.UpdateAsync(resident);
+        await _repository.UpdateAsync(resident, cancellationToken);
         return resident.Adapt<IndividualDto>();
     }
 }
@@ -62,11 +62,11 @@ public class DeleteIndividualCommandHandler : IRequestHandler<DeleteIndividualCo
 
     public async Task<bool> Handle(DeleteIndividualCommand request, CancellationToken cancellationToken)
     {
-        var resident = await _repository.GetByIdAsync(request.Id);
+        var resident = await _repository.GetByIdAsync(request.Id, cancellationToken);
         if (resident == null)
             return false;
 
-        await _repository.DeleteAsync(resident);
+        await _repository.DeleteAsync(resident, cancellationToken);
         return true;
     }
 }

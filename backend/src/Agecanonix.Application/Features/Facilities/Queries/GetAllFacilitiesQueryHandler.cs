@@ -17,7 +17,7 @@ public class GetAllFacilitiesQueryHandler : IRequestHandler<GetAllFacilitiesQuer
 
     public async Task<IEnumerable<FacilityDto>> Handle(GetAllFacilitiesQuery request, CancellationToken cancellationToken)
     {
-        var facilities = await _repository.GetAllAsync();
+        var facilities = await _repository.GetAllAsync(cancellationToken);
         return facilities.Adapt<IEnumerable<FacilityDto>>();
     }
 }
