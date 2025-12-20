@@ -21,19 +21,3 @@ public class GetAllIndividualsQueryHandler : IRequestHandler<GetAllIndividualsQu
         return individuals.Adapt<IEnumerable<IndividualDto>>();
     }
 }
-
-public class GetIndividualByIdQueryHandler : IRequestHandler<GetIndividualByIdQuery, IndividualDto?>
-{
-    private readonly IRepository<Individual> _repository;
-
-    public GetIndividualByIdQueryHandler(IRepository<Individual> repository)
-    {
-        _repository = repository;
-    }
-
-    public async Task<IndividualDto?> Handle(GetIndividualByIdQuery request, CancellationToken cancellationToken)
-    {
-        var resident = await _repository.GetByIdAsync(request.Id, cancellationToken);
-        return resident?.Adapt<IndividualDto>();
-    }
-}
