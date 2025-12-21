@@ -21,8 +21,8 @@ public class IndividualRelationship : BaseEntity
     // Priority for emergency contact (1 = highest priority)
     public int Priority { get; set; }
 
-    // Whether this person can pick up the individual
-    public bool CanPickUp { get; set; } = false;
+    // Whether this person is an emergency contact
+    public bool IsEmergencyContact { get; set; } = false;
 
     // Additional notes about the relationship
     public string? Notes { get; set; }
