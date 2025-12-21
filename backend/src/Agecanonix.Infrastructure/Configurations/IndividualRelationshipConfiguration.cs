@@ -18,8 +18,7 @@ public class IndividualRelationshipConfiguration : IEntityTypeConfiguration<Indi
             .IsRequired();
 
         builder.Property(e => e.IsEmergencyContact)
-            .IsRequired()
-            .HasDefaultValue(false);
+            .IsRequired();
 
         // Indexes for efficient queries
         builder.HasIndex(e => new { e.SourceIndividualId, e.Priority });
