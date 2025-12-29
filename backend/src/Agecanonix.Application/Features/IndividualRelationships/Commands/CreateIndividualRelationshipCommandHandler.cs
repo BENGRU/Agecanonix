@@ -18,7 +18,6 @@ public class CreateIndividualRelationshipCommandHandler : IRequestHandler<Create
     public async Task<IndividualRelationshipDto> Handle(CreateIndividualRelationshipCommand request, CancellationToken cancellationToken)
     {
         var relationship = request.Dto.Adapt<IndividualRelationship>();
-        relationship.Id = Guid.NewGuid();
         relationship.CreatedAt = DateTime.UtcNow;
         relationship.CreatedBy = "system";
 

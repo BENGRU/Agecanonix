@@ -18,7 +18,6 @@ public class CreateIndividualCommandHandler : IRequestHandler<CreateIndividualCo
     public async Task<IndividualDto> Handle(CreateIndividualCommand request, CancellationToken cancellationToken)
     {
         var individual = request.Dto.Adapt<Individual>();
-        individual.Id = Guid.NewGuid();
         individual.CreatedAt = DateTime.UtcNow;
         individual.CreatedBy = "system";
 

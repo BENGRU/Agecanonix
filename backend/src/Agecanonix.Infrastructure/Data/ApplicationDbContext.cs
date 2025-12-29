@@ -1,4 +1,6 @@
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Agecanonix.Domain.Common;
 using Agecanonix.Domain.Entities;
 
 namespace Agecanonix.Infrastructure.Data;
@@ -20,6 +22,18 @@ public class ApplicationDbContext : DbContext
 
         // Apply all entity configurations from the assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        // Assign sequential GUID generator to all BaseEntity-derived types
+        var baseEntityTypes = modelBuilder.Model.GetEntityTypes()
+            .Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType));
+
+        foreach (var entityType in baseEntityTypes)
+        {
+            modelBuilder.Entity(entityType.ClrType)
+                .Property(nameof(BaseEntity.Id))
+                .ValueGeneratedOnAdd()
+                .HasValueGenerator<SequentialGuidValueGenerator>();
+        }
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -18,7 +18,6 @@ public class CreateFacilityCommandHandler : IRequestHandler<CreateFacilityComman
     public async Task<FacilityDto> Handle(CreateFacilityCommand request, CancellationToken cancellationToken)
     {
         var facility = request.Dto.Adapt<Facility>();
-        facility.Id = Guid.NewGuid();
         facility.CreatedAt = DateTime.UtcNow;
         facility.CreatedBy = "system"; // TODO: Get from authenticated user
 
