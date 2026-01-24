@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 
@@ -9,30 +10,20 @@ namespace Agecanonix.Infrastructure.Data;
 /// </summary>
 public class SequentialGuidValueGenerator : ValueGenerator<Guid>
 {
-    private static readonly object _lock = new();
-    private static long _lastTimestamp;
+    private static long _counter = DateTime.UtcNow.Ticks;
 
     public override Guid Next(EntityEntry entry)
     {
-        lock (_lock)
-        {
-            long timestamp = DateTime.UtcNow.Ticks;
-            if (timestamp <= _lastTimestamp)
-            {
-                timestamp = _lastTimestamp + 1; // ensure monotonicity
-            }
+        long timestamp = Interlocked.Increment(ref _counter); // atomic monotonic counter
 
-            _lastTimestamp = timestamp;
+        byte[] guidArray = Guid.NewGuid().ToByteArray();
+        byte[] timestampBytes = BitConverter.GetBytes(timestamp);
 
-            byte[] guidArray = Guid.NewGuid().ToByteArray();
-            byte[] timestampBytes = BitConverter.GetBytes(timestamp);
+        // Place timestamp in first 6 bytes for true COMB ordering (SQL Server compares left-to-right)
+        Array.Reverse(timestampBytes);
+        Array.Copy(timestampBytes, 0, guidArray, 0, 6);
 
-            // Place timestamp in last 6 bytes to get ordering-friendly GUIDs
-            Array.Reverse(timestampBytes);
-            Array.Copy(timestampBytes, 0, guidArray, 10, 6);
-
-            return new Guid(guidArray);
-        }
+        return new Guid(guidArray);
     }
 
     public override bool GeneratesTemporaryValues => false;
