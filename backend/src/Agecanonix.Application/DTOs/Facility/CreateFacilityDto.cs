@@ -10,4 +10,5 @@ public class CreateFacilityDto
     public string Phone { get; set; } = string.Empty;
     public string? Email { get; set; }
     public int Capacity { get; set; }
+    public Guid FacilityCategoryId { get; set; }
 }

@@ -27,6 +27,11 @@ public class FacilityConfiguration : IEntityTypeConfiguration<Facility>
         builder.Property(e => e.Phone)
             .HasMaxLength(20);
 
+        builder.HasOne(e => e.Category)
+            .WithMany(c => c.Facilities)
+            .HasForeignKey(e => e.FacilityCategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         // Global query filter for soft delete
         builder.HasQueryFilter(e => !e.IsDeleted);
     }

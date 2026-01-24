@@ -139,6 +139,8 @@ app.MapGet("/", () => new
         swagger = "/swagger",
         openApiSpec = "/openapi/v1.json",
         facilities = "/api/facilities",
+        facilityCategories = "/api/facility-categories",
+        facilityPublics = "/api/facility-publics",
         individuals = "/api/individuals",
         contacts = "/api/contacts",
         stays = "/api/stays"
@@ -165,6 +167,8 @@ app.MapGet("/health", () => new
 
 // Map API endpoints
 app.MapFacilityEndpoints();
+app.MapFacilityCategoryEndpoints();
+app.MapFacilityPublicEndpoints();
 app.MapIndividualEndpoints();
 app.MapIndividualRelationshipEndpoints();
 

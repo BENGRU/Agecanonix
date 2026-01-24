@@ -32,8 +32,15 @@ public static class FacilityEndpoints
 
         group.MapPost("/", async ([FromBody] CreateFacilityDto dto, IMediator mediator) =>
         {
-            var facility = await mediator.Send(new CreateFacilityCommand(dto));
-            return Results.Created($"/api/facilities/{facility.Id}", facility);
+            try
+            {
+                var facility = await mediator.Send(new CreateFacilityCommand(dto));
+                return Results.Created($"/api/facilities/{facility.Id}", facility);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
         })
         .WithName("CreateFacility")
         .Produces<FacilityDto>(201)
@@ -50,10 +57,15 @@ public static class FacilityEndpoints
             {
                 return Results.NotFound();
             }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
         })
         .WithName("UpdateFacility")
         .Produces<FacilityDto>(200)
-        .Produces(404);
+        .Produces(404)
+        .Produces(400);
 
         group.MapDelete("/{id}", async (Guid id, IMediator mediator) =>
         {
