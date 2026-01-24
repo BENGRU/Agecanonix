@@ -167,8 +167,8 @@ app.MapGet("/health", () => new
 
 // Map API endpoints
 app.MapFacilityEndpoints();
-app.MapFacilityCategoryEndpoints();
-app.MapFacilityPublicEndpoints();
+app.MapServiceTypeEndpoints();
+app.MapTargetPopulationEndpoints();
 app.MapIndividualEndpoints();
 app.MapIndividualRelationshipEndpoints();
 

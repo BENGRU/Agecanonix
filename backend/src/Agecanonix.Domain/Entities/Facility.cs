@@ -16,6 +16,6 @@ public class Facility : BaseEntity
     public string? Email { get; set; }
     public int Capacity { get; set; }
 
-    public Guid FacilityCategoryId { get; set; }
-    public FacilityCategory? Category { get; set; }
+    public Guid ServiceTypeId { get; set; }
+    public ServiceType? ServiceType { get; set; }
 }

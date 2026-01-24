@@ -9,13 +9,13 @@ namespace Agecanonix.Application.Features.Facilities.Queries;
 public class GetFacilityByIdQueryHandler : IRequestHandler<GetFacilityByIdQuery, FacilityDto?>
 {
     private readonly IRepository<Facility> _repository;
-    private readonly IRepository<FacilityCategory> _categoryRepository;
-    private readonly IRepository<FacilityPublic> _publicRepository;
+    private readonly IRepository<ServiceType> _categoryRepository;
+    private readonly IRepository<TargetPopulation> _publicRepository;
 
     public GetFacilityByIdQueryHandler(
         IRepository<Facility> repository,
-        IRepository<FacilityCategory> categoryRepository,
-        IRepository<FacilityPublic> publicRepository)
+        IRepository<ServiceType> categoryRepository,
+        IRepository<TargetPopulation> publicRepository)
     {
         _repository = repository;
         _categoryRepository = categoryRepository;
@@ -29,14 +29,14 @@ public class GetFacilityByIdQueryHandler : IRequestHandler<GetFacilityByIdQuery,
             return null;
 
         var dto = facility.Adapt<FacilityDto>();
-        var category = await _categoryRepository.GetByIdAsync(facility.FacilityCategoryId, cancellationToken);
-        dto.FacilityCategoryName = category?.Name ?? string.Empty;
+        var category = await _categoryRepository.GetByIdAsync(facility.ServiceTypeId, cancellationToken);
+        dto.ServiceTypeName = category?.Name ?? string.Empty;
 
         if (category is not null)
         {
-            var facilityPublic = await _publicRepository.GetByIdAsync(category.FacilityPublicId, cancellationToken);
-            dto.FacilityPublicId = category.FacilityPublicId;
-            dto.FacilityPublicName = facilityPublic?.Name ?? string.Empty;
+            var facilityPublic = await _publicRepository.GetByIdAsync(category.TargetPopulationId, cancellationToken);
+            dto.TargetPopulationId = category.TargetPopulationId;
+            dto.TargetPopulationName = facilityPublic?.Name ?? string.Empty;
         }
 
         return dto;

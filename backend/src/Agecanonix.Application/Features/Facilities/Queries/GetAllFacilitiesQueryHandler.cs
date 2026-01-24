@@ -10,13 +10,13 @@ namespace Agecanonix.Application.Features.Facilities.Queries;
 public class GetAllFacilitiesQueryHandler : IRequestHandler<GetAllFacilitiesQuery, IEnumerable<FacilityDto>>
 {
     private readonly IRepository<Facility> _repository;
-    private readonly IRepository<FacilityCategory> _categoryRepository;
-    private readonly IRepository<FacilityPublic> _publicRepository;
+    private readonly IRepository<ServiceType> _categoryRepository;
+    private readonly IRepository<TargetPopulation> _publicRepository;
 
     public GetAllFacilitiesQueryHandler(
         IRepository<Facility> repository,
-        IRepository<FacilityCategory> categoryRepository,
-        IRepository<FacilityPublic> publicRepository)
+        IRepository<ServiceType> categoryRepository,
+        IRepository<TargetPopulation> publicRepository)
     {
         _repository = repository;
         _categoryRepository = categoryRepository;
@@ -30,27 +30,27 @@ public class GetAllFacilitiesQueryHandler : IRequestHandler<GetAllFacilitiesQuer
             return Enumerable.Empty<FacilityDto>();
 
         var categoryIds = facilities
-            .Select(f => f.FacilityCategoryId)
+            .Select(f => f.ServiceTypeId)
             .Distinct()
             .ToList();
 
         var categories = (await _categoryRepository.FindAsync(c => categoryIds.Contains(c.Id), cancellationToken)).ToList();
-        var categoryLookup = categories.ToDictionary(c => c.Id, c => new { c.Name, c.FacilityPublicId });
+        var categoryLookup = categories.ToDictionary(c => c.Id, c => new { c.Name, c.TargetPopulationId });
 
-        var publicIds = categories.Select(c => c.FacilityPublicId).Distinct().ToList();
+        var publicIds = categories.Select(c => c.TargetPopulationId).Distinct().ToList();
         var publics = await _publicRepository.FindAsync(p => publicIds.Contains(p.Id), cancellationToken);
         var publicLookup = publics.ToDictionary(p => p.Id, p => p.Name);
 
         return facilities.Select(facility =>
         {
             var dto = facility.Adapt<FacilityDto>();
-            if (categoryLookup.TryGetValue(facility.FacilityCategoryId, out var catInfo))
+            if (categoryLookup.TryGetValue(facility.ServiceTypeId, out var catInfo))
             {
-                dto.FacilityCategoryName = catInfo.Name;
-                dto.FacilityPublicId = catInfo.FacilityPublicId;
-                if (publicLookup.TryGetValue(catInfo.FacilityPublicId, out var publicName))
+                dto.ServiceTypeName = catInfo.Name;
+                dto.TargetPopulationId = catInfo.TargetPopulationId;
+                if (publicLookup.TryGetValue(catInfo.TargetPopulationId, out var publicName))
                 {
-                    dto.FacilityPublicName = publicName;
+                    dto.TargetPopulationName = publicName;
                 }
             }
 

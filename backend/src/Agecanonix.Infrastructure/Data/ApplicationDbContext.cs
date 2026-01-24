@@ -13,8 +13,8 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Facility> Facilities { get; set; }
-    public DbSet<FacilityCategory> FacilityCategories { get; set; }
-    public DbSet<FacilityPublic> FacilityPublics { get; set; }
+    public DbSet<ServiceType> ServiceTypes { get; set; }
+    public DbSet<TargetPopulation> TargetPopulations { get; set; }
     public DbSet<Individual> Individuals { get; set; }
     public DbSet<IndividualRelationship> IndividualRelationships { get; set; }
 

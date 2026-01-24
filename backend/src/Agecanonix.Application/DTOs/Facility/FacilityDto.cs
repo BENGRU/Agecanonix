@@ -11,10 +11,10 @@ public class FacilityDto
     public string Phone { get; set; } = string.Empty;
     public string? Email { get; set; }
     public int Capacity { get; set; }
-    public Guid FacilityCategoryId { get; set; }
-    public string FacilityCategoryName { get; set; } = string.Empty;
-    public Guid FacilityPublicId { get; set; }
-    public string FacilityPublicName { get; set; } = string.Empty;
+    public Guid ServiceTypeId { get; set; }
+    public string ServiceTypeName { get; set; } = string.Empty;
+    public Guid TargetPopulationId { get; set; }
+    public string TargetPopulationName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
 }
