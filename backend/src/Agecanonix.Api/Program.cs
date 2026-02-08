@@ -62,8 +62,12 @@ builder.Services.AddMediatR(cfg =>
 // Add Mapster
 builder.Services.AddMapster();
 
-// Add Repositories
+// Add Repositories and Unit of Work
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<Agecanonix.Application.Interfaces.IUnitOfWork, Agecanonix.Infrastructure.Units.UnitOfWork>();
+
+// Add Services
+builder.Services.AddScoped<Agecanonix.Application.Services.PriorityManagementService>();
 
 // Configure InMemory database (for development/testing)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

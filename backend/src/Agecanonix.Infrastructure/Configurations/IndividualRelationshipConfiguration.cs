@@ -21,7 +21,9 @@ public class IndividualRelationshipConfiguration : IEntityTypeConfiguration<Indi
             .IsRequired();
 
         // Indexes for efficient queries
-        builder.HasIndex(e => new { e.SourceIndividualId, e.Priority });
+        // Unique index to ensure each SourceIndividual has unique priorities (1, 2, 3...)
+        builder.HasIndex(e => new { e.SourceIndividualId, e.Priority })
+            .IsUnique();
         builder.HasIndex(e => e.RelatedIndividualId);
 
         // Relationship configuration - source individual
