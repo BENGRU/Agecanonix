@@ -10,6 +10,9 @@ public class IndividualRelationshipConfiguration : IEntityTypeConfiguration<Indi
     {
         builder.HasKey(e => e.Id);
 
+        // Configure base entity properties (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy, IsDeleted, RowVersion)
+        BaseEntityConfiguration.ConfigureBaseEntity(builder);
+
         builder.Property(e => e.RelationshipType)
             .IsRequired()
             .HasMaxLength(100);

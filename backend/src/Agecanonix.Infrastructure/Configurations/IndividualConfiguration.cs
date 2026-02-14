@@ -10,6 +10,9 @@ public class IndividualConfiguration : IEntityTypeConfiguration<Individual>
     {
         builder.HasKey(e => e.Id);
 
+        // Configure base entity properties (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy, IsDeleted, RowVersion)
+        BaseEntityConfiguration.ConfigureBaseEntity(builder);
+
         builder.Property(e => e.LastName)
             .IsRequired()
             .HasMaxLength(100);

@@ -15,6 +15,9 @@ public class TargetPopulationConfiguration : IEntityTypeConfiguration<TargetPopu
     {
         builder.HasKey(e => e.Id);
 
+        // Configure base entity properties (CreatedAt, UpdatedAt, CreatedBy, UpdatedBy, IsDeleted, RowVersion)
+        BaseEntityConfiguration.ConfigureBaseEntity(builder);
+
         builder.Property(e => e.Name)
             .IsRequired()
             .HasMaxLength(200);
