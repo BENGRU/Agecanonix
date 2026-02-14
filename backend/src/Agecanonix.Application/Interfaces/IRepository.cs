@@ -11,4 +11,22 @@ public interface IRepository<T> where T : class
     Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
     Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
     Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get a deleted entity by ID (ignores soft delete filter).
+    /// Used for audit/history purposes.
+    /// </summary>
+    Task<T?> GetDeletedByIdAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get all deleted entities (ignores soft delete filter).
+    /// Used for audit/history purposes.
+    /// </summary>
+    Task<IEnumerable<T>> GetAllDeletedAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get all entities including deleted ones (ignores soft delete filter).
+    /// Result will include both active and deleted entities.
+    /// </summary>
+    Task<IEnumerable<T>> GetAllIncludingDeletedAsync(CancellationToken cancellationToken = default);
 }

@@ -179,5 +179,25 @@ public class UnitOfWork : IUnitOfWork
         {
             return await _dbSet.FindAsync([id], cancellationToken) != null;
         }
+
+        public async Task<T?> GetDeletedByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.IgnoreQueryFilters().FirstOrDefaultAsync(e => 
+                EF.Property<Guid>(e, "Id") == id && 
+                EF.Property<bool>(e, "IsDeleted") == true, 
+                cancellationToken);
+        }
+
+        public async Task<IEnumerable<T>> GetAllDeletedAsync(CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.IgnoreQueryFilters()
+                .Where(e => EF.Property<bool>(e, "IsDeleted") == true)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<T>> GetAllIncludingDeletedAsync(CancellationToken cancellationToken = default)
+        {
+            return await _dbSet.IgnoreQueryFilters().ToListAsync(cancellationToken);
+        }
     }
 }
