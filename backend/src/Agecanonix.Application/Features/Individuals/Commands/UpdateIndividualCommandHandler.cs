@@ -1,8 +1,10 @@
 using Agecanonix.Application.DTOs.Individual;
+using Agecanonix.Application.Exceptions;
 using Agecanonix.Application.Interfaces;
 using Agecanonix.Domain.Entities;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agecanonix.Application.Features.Individuals.Commands;
 
@@ -21,11 +23,26 @@ public class UpdateIndividualCommandHandler : IRequestHandler<UpdateIndividualCo
         if (individual == null)
             throw new KeyNotFoundException($"Individual with ID {request.Id} not found");
 
-        request.Dto.Adapt(individual);
-        individual.UpdatedAt = DateTime.UtcNow;
-        individual.UpdatedBy = "system";
+        // Set the row version from the DTO for optimistic concurrency control
+        individual.RowVersion = request.Dto.RowVersion;
 
-        await _repository.UpdateAsync(individual, cancellationToken);
+        try
+        {
+            request.Dto.Adapt(individual);
+            individual.UpdatedAt = DateTime.UtcNow;
+            individual.UpdatedBy = "system";
+
+            await _repository.UpdateAsync(individual, cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            throw new ConcurrencyException(
+                $"Unable to update Individual with ID {request.Id}. " +
+                $"The record was modified by another user. Please refresh and try again.",
+                ex
+            );
+        }
+
         return individual.Adapt<IndividualDto>();
     }
 }

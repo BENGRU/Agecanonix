@@ -1,9 +1,11 @@
 using Agecanonix.Application.DTOs.IndividualRelationship;
+using Agecanonix.Application.Exceptions;
 using Agecanonix.Application.Interfaces;
 using Agecanonix.Application.Services;
 using Agecanonix.Domain.Entities;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agecanonix.Application.Features.IndividualRelationships.Commands;
 
@@ -29,6 +31,9 @@ public class UpdateIndividualRelationshipCommandHandler : IRequestHandler<Update
         int oldPriority = relationship.Priority;
         Guid sourceIndividualId = relationship.SourceIndividualId;
         
+        // Set the row version from the DTO for optimistic concurrency control
+        relationship.RowVersion = request.Dto.RowVersion;
+        
         request.Dto.Adapt(relationship);
         
         // Validate and reorganize priorities if priority changed
@@ -42,11 +47,22 @@ public class UpdateIndividualRelationshipCommandHandler : IRequestHandler<Update
                 cancellationToken);
         }
         
-        relationship.UpdatedAt = DateTime.UtcNow;
-        relationship.UpdatedBy = "system";
+        try
+        {
+            relationship.UpdatedAt = DateTime.UtcNow;
+            relationship.UpdatedBy = "system";
 
-        await _unitOfWork.Relationships.UpdateAsync(relationship, cancellationToken);
-        await _unitOfWork.CompleteAsync(cancellationToken);
+            await _unitOfWork.Relationships.UpdateAsync(relationship, cancellationToken);
+            await _unitOfWork.CompleteAsync(cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            throw new ConcurrencyException(
+                $"Unable to update IndividualRelationship with ID {request.Id}. " +
+                $"The record was modified by another user. Please refresh and try again.",
+                ex
+            );
+        }
         
         return relationship.Adapt<IndividualRelationshipDto>();
     }

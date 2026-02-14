@@ -11,4 +11,5 @@ public class UpdateFacilityDto
     public string? Email { get; set; }
     public int Capacity { get; set; }
     public Guid ServiceTypeId { get; set; }
+    public byte[] RowVersion { get; set; } = Array.Empty<byte>();
 }

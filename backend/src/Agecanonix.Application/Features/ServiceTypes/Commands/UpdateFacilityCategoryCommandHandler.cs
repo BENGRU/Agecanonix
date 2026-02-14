@@ -1,8 +1,10 @@
 using Agecanonix.Application.DTOs.ServiceType;
+using Agecanonix.Application.Exceptions;
 using Agecanonix.Application.Interfaces;
 using Agecanonix.Domain.Entities;
 using Mapster;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Agecanonix.Application.Features.ServiceTypes.Commands;
 
@@ -27,11 +29,25 @@ public class UpdateServiceTypeCommandHandler : IRequestHandler<UpdateServiceType
         var facilityPublic = await _publicRepository.GetByIdAsync(request.Dto.TargetPopulationId, cancellationToken)
                            ?? throw new ArgumentException($"Facility public with ID {request.Dto.TargetPopulationId} not found");
 
-        request.Dto.Adapt(category);
-        category.UpdatedAt = DateTime.UtcNow;
-        category.UpdatedBy = "system";
+        // Set the row version from the DTO for optimistic concurrency control
+        category.RowVersion = request.Dto.RowVersion;
 
-        await _categoryRepository.UpdateAsync(category, cancellationToken);
+        try
+        {
+            request.Dto.Adapt(category);
+            category.UpdatedAt = DateTime.UtcNow;
+            category.UpdatedBy = "system";
+
+            await _categoryRepository.UpdateAsync(category, cancellationToken);
+        }
+        catch (DbUpdateConcurrencyException ex)
+        {
+            throw new ConcurrencyException(
+                $"Unable to update ServiceType with ID {request.Id}. " +
+                $"The record was modified by another user. Please refresh and try again.",
+                ex
+            );
+        }
 
         var dto = category.Adapt<ServiceTypeDto>();
         dto.TargetPopulationName = facilityPublic.Name;
